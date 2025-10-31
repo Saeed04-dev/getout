@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GET OUT - The Outdoor China Select Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Japanese Earth Tone -->
+    <!-- Application Structure Plan: โครงสร้าง SPA นี้ถูกออกแบบใหม่จาก 10 สไลด์ ให้อยู่ใน 4 ส่วนหลัก (ตลาด, ทางแก้, ธุรกิจ, อนาคต) พร้อมแถบนำทางด้านบน (Navbar) เพื่อให้ผู้ใช้สามารถเข้าถึงข้อมูลแบบไม่เป็นเส้นตรง (non-linear) ได้ หรือจะเลื่อน (scroll) เพื่อดูเรื่องราวตามลำดับก็ได้ การจัดกลุ่มนี้ช่วยให้การเล่าเรื่องกระชับและเข้าใจง่ายกว่าการคลิกทีละสไลด์ โดยมีเป้าหมายเพื่อนำเสนอข้อมูลทางธุรกิจให้ชัดเจนและน่าสนใจที่สุด -->
+    <!-- Visualization & Content Choices: 
+        - Market (Slide 2, 3): ใช้ Grid 2 คอลัมน์ (Problem/Opportunity) เพื่อให้เห็นภาพเปรียบเทียบ
+        - Solution (Slide 4, 5): ใช้ Grid 2 คอลัมน์ (Solution/Philosophy) เพื่อเชื่อมโยงสิ่งที่ทำกับเหตุผลที่ทำ
+        - Business (Slide 6, 7, 8): ใช้ Tab (HTML/JS) เพื่อจัดกลุ่มข้อมูล Business Model, Validation, GTM Plan ให้เป็นระเบียบ
+        - Financials (Slide 9): Goal: Compare. Viz: HTML Table + Bar Chart (Chart.js). Interaction: แสดงภาพการเติบโตของยอดขาย/กำไร. Justification: กราฟช่วยให้เห็นแนวโน้มการเติบโตได้ชัดเจนกว่าตาราง.
+        - Vision (Slide 10): Goal: Inform. Viz: HTML List.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans Thai', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 768px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        .tab-btn.active {
+            border-bottom-color: #292524;
+            font-weight: 700;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cream': {
+                            '50': '#FFFDF7',
+                        },
+                        'stone': {
+                            '700': '#44403c',
+                            '800': '#292524',
+                        },
+                        'green': {
+                            '800': '#166534',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cream-50 text-stone-700 antialiased">
+
+    <header class="sticky top-0 z-50 bg-cream-50/90 backdrop-blur-sm shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-2xl font-bold text-stone-800">GET OUT</span>
+                    <span class="ml-2 text-2xl font-light text-stone-800">↗</span>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <a href="#market" class="nav-link text-stone-700 hover:text-stone-800 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium">ตลาด</a>
+                    <a href="#solution" class="nav-link text-stone-700 hover:text-stone-800 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium">ทางแก้</a>
+                    <a href="#business" class="nav-link text-stone-700 hover:text-stone-800 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium">ธุรกิจ</a>
+                    <a href="#future" class="nav-link text-stone-700 hover:text-stone-800 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium">อนาคต</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="cover" class="h-[calc(100vh-4rem)] min-h-[500px] flex items-center justify-center text-center bg-stone-100" style="background-image: url('https://placehold.co/1920x1080/D2B48C/FFFDF7?text=Trail+Running+in+Chiang+Mai'); background-size: cover; background-position: center; background-blend-mode: overlay; background-color: rgba(255, 253, 247, 0.5);">
+            <div class="max-w-2xl mx-auto px-4 py-16 sm:px-6 lg:px-8 bg-cream-50/80 rounded-lg shadow-lg backdrop-blur-sm">
+                <h1 class="text-5xl font-extrabold text-stone-800 sm:text-6xl md:text-7xl">
+                    GET OUT
+                </h1>
+                <h2 class="mt-2 text-xl font-medium text-stone-700 sm:text-2xl">
+                    The Outdoor China Select Store
+                </h2>
+                <p class="mt-6 text-2xl font-semibold text-stone-800 sm:text-3xl">
+                    TASTE + TRUST + SELECTION
+                </p>
+                <blockquote class="mt-6 text-lg font-medium text-stone-700 sm:text-xl">
+                    “ของดีสายลุย ไม่ต้องบินไปกวางโจว – เราคัดมาให้แล้ว”
+                </blockquote>
+            </div>
+        </section>
+
+        <section id="market" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-stone-800 sm:text-4xl">ตลาด: ปัญหาและโอกาส</h2>
+                    <p class="mt-4 text-lg text-stone-700 max-w-2xl mx-auto">
+                        ส่วนนี้จะอธิบายถึงปัญหาที่นักกิจกรรมกลางแจ้งในไทยกำลังเผชิญ และช่องว่างทางการตลาดที่ GET OUT เล็งเห็นว่าเป็นโอกาสทางธุรกิจที่สำคัญ
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold text-red-700 mb-4">1. ปัญหาของนัก Outdoor ไทย (The Problem)</h3>
+                        <ul class="space-y-3 text-lg text-stone-700">
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 inline-block w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-1 font-bold">!</span>
+                                <div><strong>ราคาสูงเกินจริง:</strong> สินค้า Outdoor / Running พรีเมียมในไทยมีราคาแพงมาก</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 inline-block w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-1 font-bold">!</span>
+                                <div><strong>Mark-up สูง:</strong> แบรนด์ยุโรปมี Mark-up สูงถึง 200–300%</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 inline-block w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-1 font-bold">!</span>
+                                <div><strong>เข้าถึงยาก:</strong> คนเล่นจริงต้องการของดีมีคุณภาพ แต่เข้าถึงด้วยราคาที่สมเหตุสมผลได้ยาก</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 inline-block w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-1 font-bold">!</span>
+                                <div><strong>ขาดความน่าเชื่อถือ:</strong> ยังไม่มีร้านที่ “คัดของจีนคุณภาพ” มาขายแบบไว้ใจได้</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold text-green-800 mb-4">2. ช่องว่างและโอกาสในตลาด (The Opportunity)</h3>
+                        <ul class="space-y-3 text-lg text-stone-700">
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 inline-block w-5 h-5 bg-green-700 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-1 font-bold">✔</span>
+                                <div><strong>ตลาดเติบโตสูง:</strong> ตลาด Outdoor / กิจกรรมผจญภัยในไทยเติบโตเฉลี่ย 12–15% ต่อปี</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 inline-block w-5 h-5 bg-green-700 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-1 font-bold">✔</span>
+                                <div><strong>กลุ่มเป้าหมายขยายตัว:</strong> นักวิ่งเทรลและมาราธอนมีจำนวนเพิ่มขึ้นอย่างต่อเนื่อง</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 inline-block w-5 h-5 bg-green-700 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-1 font-bold">✔</span>
+                                <div><strong>ฐานผลิตโลก:</strong> ประเทศจีนคือฐานผลิตสินค้า Outdoor คุณภาพสูงระดับโลก</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 inline-block w-5 h-5 bg-green-700 text-white rounded-full text-xs flex items-center justify-center mr-3 mt-1 font-bold">✔</span>
+                                <div><strong>ช่องว่างชัดเจน:</strong> ยังไม่มีผู้เล่นที่นำเสนอ "ของจีนดี" ที่คัดสรรมาอย่างน่าเชื่อถือในตลาดไทย</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="py-16 sm:py-24 bg-stone-100">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-stone-800 sm:text-4xl">ทางแก้และแก่นของแบรนด์</h2>
+                    <p class="mt-4 text-lg text-stone-700 max-w-2xl mx-auto">
+                        นี่คือวิธีที่เราจะแก้ปัญหาในตลาด (Solution) และปรัชญาหลัก 3 ข้อ (Philosophy) ที่เป็นหัวใจในการดำเนินงานของ GET OUT
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold text-stone-800 mb-4">3. แนวทางแก้ปัญหาของเรา (The GET OUT Model)</h3>
+                        <ul class="space-y-3 text-lg text-stone-700">
+                            <li><strong>Curated Store:</strong> Get Out เป็นร้านที่รวบรวมแบรนด์จีนพรีเมียมที่คัดสรรแล้วมาไว้ในที่เดียว</li>
+                            <li><strong>Value Proposition:</strong> นำเสนอคุณภาพเทียบเท่าเสื้อ 4,000 บาท แต่ขายในราคาเพียง 1,400 บาท</li>
+                            <li><strong>สร้างความเชื่อมั่น:</strong> ลูกค้าเชื่อมั่นในรสนิยม (Taste) และความจริงใจในการคัดเลือกสินค้าของเรา</li>
+                            <li><strong>เป้าหมาย:</strong> ทำลายความเชื่อเดิมที่ว่า "ของดีต้องมาจากตะวันตกเท่านั้น"</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold text-stone-800 mb-4">4. สามเสาหลักของแบรนด์ (Our Philosophy)</h3>
+                        <dl class="space-y-4">
+                            <div>
+                                <dt class="text-xl font-semibold text-stone-800">1. TASTE (รสนิยม)</dt>
+                                <dd class="mt-1 text-lg text-stone-700">เราคัดเลือกเฉพาะสินค้าที่มีดีไซน์ดี ฟังก์ชันโดดเด่น และมีรสนิยมการออกแบบระดับพรีเมียม เน้นความเรียบเท่ แบบญี่ปุ่น</dd>
+                            </div>
+                            <div>
+                                <dt class="text-xl font-semibold text-stone-800">2. TRUST (ความไว้ใจ)</dt>
+                                <dd class="mt-1 text-lg text-stone-700">สินค้าทุกชิ้นผ่านการคัดเลือกและทดลองใช้งานจริงจากทีมงาน ก่อนนำมาขาย เราขายความจริงใจและความโปร่งใสเรื่องแหล่งที่มา</dd>
+                            </div>
+                            <div>
+                                <dt class="text-xl font-semibold text-stone-800">3. SELECTION (การเลือกสรร)</dt>
+                                <dd class="mt-1 text-lg text-stone-700">รวมแบรนด์จีนที่ดีที่สุดที่ผลิตสินค้าในระดับเดียวกับคู่แข่งจากยุโรป ลดตัวเลือกที่สับสน และเสนอเฉพาะ 'The Best of China'</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="business" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-stone-800 sm:text-4xl">แผนธุรกิจ</h2>
+                    <p class="mt-4 text-lg text-stone-700 max-w-2xl mx-auto">
+                        นี่คือโมเดลธุรกิจของเรา สิ่งที่พิสูจน์ว่าตลาดต้องการเรา และแผนการดำเนินงาน 90 วันแรก คลิกที่แท็บเพื่อดูรายละเอียด
+                    </p>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-4 border-b border-stone-300">
+                        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                            <button class="tab-btn active whitespace-nowrap py-4 px-1 border-b-2 border-stone-800 text-stone-800 text-lg font-medium" data-tab="model">
+                                5. โมเดลธุรกิจ
+                            </button>
+                            <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300 text-lg font-medium" data-tab="validation">
+                                6. การยืนยันตลาด
+                            </button>
+                            <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300 text-lg font-medium" data-tab="gtm">
+                                7. แผน 90 วัน
+                            </button>
+                        </nav>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <div id="model" class="tab-content">
+                            <h3 class="text-2xl font-semibold text-stone-800 mb-4">5. แหล่งรายได้และโมเดลการสร้างกำไร</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-lg">
+                                <div>
+                                    <h4 class="font-semibold text-stone-800">ช่องทางขาย</h4>
+                                    <ul class="mt-2 space-y-2 list-disc list-inside">
+                                        <li><strong>ออนไลน์:</strong> Shopee, TikTok Shop, เว็บไซต์</li>
+                                        <li><strong>หน้าร้านหลัก:</strong> “Basecamp เชียงใหม่”</li>
+                                        <li><strong>อีเวนต์:</strong> Pop-up Store ตามงานวิ่ง</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-stone-800">โครงสร้างรายได้และกำไร</h4>
+                                    <ul class="mt-2 space-y-2 list-disc list-inside">
+                                        <li><strong>รายได้หลัก:</strong> B2C, B2B, อีเวนต์</li>
+                                        <li><strong>กำไรขั้นต้น (GM):</strong> เฉลี่ย 50–60%</li>
+                                        <li><strong>กำไรสุทธิเป้าหมาย (NP):</strong> 30%</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="validation" class="tab-content hidden">
+                            <h3 class="text-2xl font-semibold text-stone-800 mb-4">6. การยืนยันตลาด (Traction)</h3>
+                            <ul class="space-y-3 text-lg text-stone-700 list-disc list-inside">
+                                <li><strong>คอนเนกชันพร้อม:</strong> มีฐานเครือข่ายนักวิ่งเทรล / สายเดินป่า / ชุมชน Outdoor อยู่แล้ว</li>
+                                <li><strong>กลุ่มทดลองให้ผลบวก:</strong> ได้รับ Feedback ที่ดีเยี่ยมจากกลุ่มทดลองสินค้า (Beta Testers)</li>
+                                <li><strong>ความน่าเชื่อถือของผู้ก่อตั้ง:</strong> บุคคลในวงการมีความเชื่อมั่นในรสนิยม (Taste) และมาตรฐานการคัดเลือกสินค้าของผู้ก่อตั้ง</li>
+                            </ul>
+                        </div>
+
+                        <div id="gtm" class="tab-content hidden">
+                            <h3 class="text-2xl font-semibold text-stone-800 mb-4">7. แผนการเข้าสู่ตลาด 90 วัน (GTM)</h3>
+                            <div class="relative pl-6 border-l-2 border-stone-800 space-y-8">
+                                <div>
+                                    <span class="absolute -left-3 flex items-center justify-center w-6 h-6 bg-stone-800 rounded-full text-cream-50 font-bold">1</span>
+                                    <h4 class="text-xl font-semibold text-stone-800">เดือนที่ 1: การเตรียมการและการคัดสรร</h4>
+                                    <ul class="mt-2 space-y-1 text-lg text-stone-700 list-disc list-inside">
+                                        <li>คัดเลือกแบรนด์จีนพรีเมียมเป้าหมาย</li>
+                                        <li>ติดต่อซัพพลายเออร์และเจรจา</li>
+                                        <li>สั่งสินค้าตัวอย่าง (Sample) มาเพื่อทดลองและรีวิว</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <span class="absolute -left-3 flex items-center justify-center w-6 h-6 bg-stone-800 rounded-full text-cream-50 font-bold">2</span>
+                                    <h4 class="text-xl font-semibold text-stone-800">เดือนที่ 2: เปิดตัวดิจิทัล</h4>
+                                    <ul class="mt-2 space-y-1 text-lg text-stone-700 list-disc list-inside">
+                                        <li>สร้างเพจและช่องทางโซเชียลมีเดีย</li>
+                                        <li>เริ่มรีวิวสินค้าตัวอย่างอย่างจริงจัง</li>
+                                        <li class="font-bold">เปิดขายออนไลน์ (Soft Launch) ด้วย 10 SKU แรก</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <span class="absolute -left-3 flex items-center justify-center w-6 h-6 bg-stone-800 rounded-full text-cream-50 font-bold">3</span>
+                                    <h4 class="text-xl font-semibold text-stone-800">เดือนที่ 3: Basecamp & Community</h4>
+                                    <ul class="mt-2 space-y-1 text-lg text-stone-700 list-disc list-inside">
+                                        <li class="font-bold">เปิดร้าน “Basecamp เชียงใหม่” (Soft Launch)</li>
+                                        <li>จัดกิจกรรม Run Meetup เพื่อสร้าง Community</li>
+                                        <li>เปิดตัวคอลเล็กชัน “Get Out Selections Vol.1”</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="future" class="py-16 sm:py-24 bg-stone-100">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-stone-800 sm:text-4xl">เป้าหมายทางการเงินและวิสัยทัศน์</h2>
+                    <p class="mt-4 text-lg text-stone-700 max-w-2xl mx-auto">
+                        นี่คือประมาณการทางการเงิน 3 ปีของเรา ควบคู่ไปกับวิสัยทัศน์และแผนการขยายตัวในอนาคตของ GET OUT
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold text-stone-800 mb-4">8. ข้อมูลทางการเงินโดยสังเขป (3-Year Forecast)</h3>
+                        <p class="text-lg text-stone-700 mb-4">
+                            <strong>เงินลงทุนเริ่มต้น:</strong> ~200,000 บาท<br>
+                            <strong>จุดคุ้มทุน (Break-even):</strong> 8–12 เดือน
+                        </p>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-lg">
+                                <thead class="bg-stone-100 text-stone-800">
+                                    <tr>
+                                        <th class="p-3 font-semibold">รายการ</th>
+                                        <th class="p-3 font-semibold text-right">ปี 1 (เป้าหมาย)</th>
+                                        <th class="p-3 font-semibold text-right">ปี 2 (เป้าหมาย)</th>
+                                        <th class="p-3 font-semibold text-right">ปี 3 (เป้าหมาย)</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-stone-200">
+                                    <tr>
+                                        <td class="p-3">ยอดขายรวม (MTHB)</td>
+                                        <td class="p-3 text-right">2.5 ล้าน</td>
+                                        <td class="p-3 text-right">5 ล้าน</td>
+                                        <td class="p-3 text-right">9 ล้าน</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3">กำไรขั้นต้น (MTHB)</td>
+                                        <td class="p-3 text-right">1.4 ล้าน</td>
+                                        <td class="p-3 text-right">3 ล้าน</td>
+                                        <td class="p-3 text-right">5.4 ล้าน</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 font-semibold">กำไรสุทธิ (MTHB)</td>
+                                        <td class="p-3 text-right font-semibold">0.6 ล้าน</td>
+                                        <td class="p-3 text-right font-semibold">1.2 ล้าน</td>
+                                        <td class="p-3 text-right font-semibold">2 ล้าน</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="chart-container mt-6">
+                            <canvas id="financialChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold text-stone-800 mb-4">9. วิสัยทัศน์ใน 4 ปี (The Vision)</h3>
+                        <blockquote class="border-l-4 border-stone-800 pl-4 py-2 text-xl font-semibold text-stone-800 bg-stone-100 rounded-r-lg mb-6">
+                            “ของดีไม่จำเป็นต้องแพง”
+                        </blockquote>
+                        <p class="text-lg text-stone-700 mb-4">
+                            GET OUT จะเป็นประตูให้คนไทยได้เข้าถึงแบรนด์ Outdoor จีนระดับโลก ในราคาที่ยุติธรรมและเข้าถึงได้
+                        </p>
+                        <h4 class="text-xl font-semibold text-stone-800 mb-2">แผนการขยายตัว</h4>
+                        <ul class="space-y-2 text-lg text-stone-700 list-disc list-inside">
+                            <li><strong>ปี 2:</strong> เป็น Authorized Dealer หลักให้กับแบรนด์ Outdoor จีน 3–5 แบรนด์</li>
+                            <li><strong>ปี 3:</strong> ขยายธุรกิจและเปิดสาขาใหม่ในกรุงเทพฯ เพื่อเข้าถึงตลาดหลัก</li>
+                            <li><strong>ปี 4:</strong> สร้างแบรนด์สินค้า Outdoor ของตัวเองในเครือ “Get Out Gear”</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-16 bg-stone-800 text-cream-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-bold">ขอบคุณครับ</h2>
+                <p class="mt-4 text-2xl font-light">คำถามและข้อเสนอแนะ?</p>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const financialData = {
+                labels: ['ปี 1', 'ปี 2', 'ปี 3'],
+                sales: [2.5, 5, 9],
+                netProfit: [0.6, 1.2, 2]
+            };
+
+            const ctx = document.getElementById('financialChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: financialData.labels,
+                    datasets: [
+                        {
+                            label: 'ยอดขายรวม (ล้านบาท)',
+                            data: financialData.sales,
+                            backgroundColor: 'rgba(68, 64, 60, 0.6)',
+                            borderColor: '#44403c',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'กำไรสุทธิ (ล้านบาท)',
+                            data: financialData.netProfit,
+                            backgroundColor: 'rgba(22, 101, 52, 0.7)',
+                            borderColor: '#166534',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + ' ล้าน'
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y + ' ล้านบาท';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const tabs = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-tab');
+                    
+                    tabs.forEach(t => {
+                        t.classList.remove('active', 'border-stone-800', 'text-stone-800');
+                        t.classList.add('border-transparent', 'text-stone-500', 'hover:text-stone-700', 'hover:border-stone-300');
+                    });
+
+                    tab.classList.add('active', 'border-stone-800', 'text-stone-800');
+                    tab.classList.remove('border-transparent', 'text-stone-500', 'hover:text-stone-700', 'hover:border-stone-300');
+
+                    tabContents.forEach(content => {
+                        if (content.id === target) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section[id]');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 80) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                if (current === 'cover') current = '';
+
+                navLinks.forEach(link => {
+                    link.classList.remove('border-stone-800', 'text-stone-800');
+                    link.classList.add('border-transparent', 'text-stone-700');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('border-stone-800', 'text-stone-800');
+                        link.classList.remove('border-transparent', 'text-stone-700');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
